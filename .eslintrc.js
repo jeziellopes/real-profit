@@ -41,7 +41,19 @@ module.exports = {
         tsx: "never"
       }
     ],
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "no-multiple-empty-lines": [1, { max: 1, maxEOF: 1 }],
+    "object-curly-newline": [
+      "error",
+      {
+        ObjectExpression: "always",
+        ObjectPattern: { multiline: true },
+        ImportDeclaration: "never",
+        ExportDeclaration: { multiline: true, minProperties: 3 }
+      }
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "no-explicit-any": 0
   },
   settings: {
     "import/parsers": {
