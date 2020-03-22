@@ -53,7 +53,8 @@ module.exports = {
       }
     ],
     "react/jsx-props-no-spreading": "off",
-    "no-explicit-any": 0
+    "no-explicit-any": 0,
+    "max-len": 0
   },
   settings: {
     "import/parsers": {
