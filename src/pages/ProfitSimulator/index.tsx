@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import BitcoinDataList from '../../components/BitcoinDataList';
+import SimulatorChart from '../../components/SimulatorChart';
 
 interface ProfitSimulatorProps {
   title?: string
@@ -8,7 +8,7 @@ interface ProfitSimulatorProps {
 const ProfitSimulator: FunctionComponent<ProfitSimulatorProps> = () => (
   <>
     <h1>Profit Simulator</h1>
-    <BitcoinDataList />
+    <SimulatorChart />
   </>
 
 );
