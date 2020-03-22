@@ -31,7 +31,15 @@ class BitcoinDataList extends Component<Props> {
 
     return (
       <ul>
-        {bitcoinData.map((data) => <li key={data.id}>{data.date}</li>)}
+        { bitcoinData.map((data) => (
+          <li key={data.time}>
+            {data.open}
+            {' '}
+            -
+            {' '}
+            {data.close}
+          </li>
+        ))}
       </ul>
     );
   }
@@ -43,19 +51,3 @@ const mapStateToProps = (state: ApplicationState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(BitcoinDataActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(BitcoinDataList);
-
-// export default function BitcoinDataList() {
-//   const bitcoinData = useSelector((state: ApplicationState) => state.bitcoinData.data);
-//   const treasury = useSelector((state: ApplicationState) => state.bitcoinData.data);
-
-//   return (
-//     <ul>
-//       { bitcoinData.map((data) => (
-//         <li key={Math.random()}>{data.Data}</li>
-//       ))}
-//       { treasury.map((data) => (
-//         <li key={Math.random()}>{data.Data}</li>
-//       ))}
-//     </ul>
-//   );
-// }

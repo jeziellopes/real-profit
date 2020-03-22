@@ -2,7 +2,17 @@ import { Reducer } from 'redux';
 import { BitcoinDataState, BitcoinDataTypes } from './types';
 
 const INITIAL_STATE: BitcoinDataState = {
-  data: [],
+  data: [{
+    time: 0,
+    high: 0,
+    low: 0,
+    open: 0,
+    volumefrom: 0,
+    volumeto: 0,
+    close: 0,
+    conversionType: '',
+    conversionSymbol: '',
+  }],
   error: false,
   loading: false,
 };

@@ -3,7 +3,7 @@ import { BitcoinData, BitcoinDataTypes } from './types';
 
 export const loadRequest = () => action(BitcoinDataTypes.LOAD_REQUEST);
 
-export const loadSuccess = (data: BitcoinData[]) => action(BitcoinDataTypes.LOAD_SUCCESS, {
+export const loadSuccess = (data: BitcoinData) => action(BitcoinDataTypes.LOAD_SUCCESS, {
   data,
 });
 
