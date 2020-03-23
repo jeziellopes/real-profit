@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import PanelInvestment from '../../components/PanelInvestment';
 import SimulatorChart from '../../components/SimulatorChart';
 
 interface ProfitSimulatorProps {
@@ -9,6 +10,7 @@ const ProfitSimulator: FunctionComponent<ProfitSimulatorProps> = () => (
   <>
     <h1>Profit Simulator</h1>
     <SimulatorChart />
+    <PanelInvestment />
   </>
 
 );
