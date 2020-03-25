@@ -1,20 +1,26 @@
 import React, { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { nowSubYear } from '../../services/time';
 import { ApplicationState } from '../../store';
-import { InvestmentDateTypes } from '../../store/ducks/InvestmentDateReducer/types';
+import { SimulatorDataTypes } from '../../store/ducks/SimulatorData/types';
 
 // import { Container } from './styles';
 
 export default function InputDate() {
-  const { date } = useSelector((state: ApplicationState) => state.investmentDateReducer.data);
+  const { fromsymbol, tosymbol, limit, totimestamp } = useSelector((state: ApplicationState) => state.simulatorData.params);
   const dispatch = useDispatch();
-  const [inputValue, setInputValue] = useState(date);
+  const [inputValue, setInputValue] = useState((limit / 365).toString());
 
   function setDate() {
     dispatch({
-      type: InvestmentDateTypes.CLICK_SET_INVESTMENT_DATE,
-      data: {
-        date: inputValue,
+      type: SimulatorDataTypes.SET_PARAMS,
+      payload: {
+        fromsymbol: 'BTC',
+        tosymbol: 'USD',
+        // eslint-disable-next-line radix
+        limit: parseInt(inputValue) * 365,
+        // eslint-disable-next-line radix
+        totimestamp: nowSubYear(parseInt(inputValue)),
       },
     });
   }

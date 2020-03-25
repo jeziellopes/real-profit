@@ -1,17 +1,12 @@
 import { applyMiddleware, createStore, Store } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { BitcoinDataState } from './ducks/BitcoinData/types';
-import { InvestmentAmountState } from './ducks/InvestmentAmountReducer/types';
-import { InvestmentDateState } from './ducks/InvestmentDateReducer/types';
-import { PreFixedTreasuryDataState } from './ducks/PreFixedTreasuryData/types';
 import rootReducer from './ducks/rootReducer';
+// eslint-disable-next-line import/no-cycle
 import rootSaga from './ducks/rootSaga';
+import { SimulatorDataState } from './ducks/SimulatorData/types';
 
 export interface ApplicationState {
-  bitcoinData: BitcoinDataState,
-  preFixedTreasuryData: PreFixedTreasuryDataState,
-  investmentAmountReducer: InvestmentAmountState,
-  investmentDateReducer: InvestmentDateState,
+  simulatorData: SimulatorDataState,
 }
 
 const sagaMiddleware = createSagaMiddleware();

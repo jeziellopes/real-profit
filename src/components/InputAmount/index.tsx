@@ -1,21 +1,19 @@
 import React, { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../store';
-import { InvestmentAmountTypes } from '../../store/ducks/InvestmentAmountReducer/types';
+import { SimulatorDataTypes } from '../../store/ducks/SimulatorData/types';
 
 // import { Container } from './styles';
 
 export default function InputAmount() {
-  const { amount } = useSelector((state: ApplicationState) => state.investmentAmountReducer.data);
+  const { investment } = useSelector((state: ApplicationState) => state.simulatorData);
   const dispatch = useDispatch();
-  const [inputValue, setInputValue] = useState(amount);
+  const [inputValue, setInputValue] = useState(investment);
 
   function setAmount() {
     dispatch({
-      type: InvestmentAmountTypes.CLICK_SET_INVESTMENT_AMOUNT,
-      data: {
-        amount: inputValue,
-      },
+      type: SimulatorDataTypes.SET_INVESTMENT,
+      investment: inputValue,
     });
   }
 

@@ -1,9 +1,12 @@
 import { all, takeLatest } from 'redux-saga/effects';
-import { load } from './BitcoinData/sagas';
-import { BitcoinDataTypes } from './BitcoinData/types';
+// eslint-disable-next-line import/no-cycle
+import { load, reload } from './SimulatorData/sagas';
+import { SimulatorDataTypes } from './SimulatorData/types';
 
 export default function* rootSaga() {
   return yield all([
-    takeLatest(BitcoinDataTypes.LOAD_REQUEST, load),
+    takeLatest(SimulatorDataTypes.LOAD_REQUEST, load),
+    takeLatest(SimulatorDataTypes.SET_PARAMS, reload),
+    takeLatest(SimulatorDataTypes.SET_INVESTMENT, reload),
   ]);
 }
