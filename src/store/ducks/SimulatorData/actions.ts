@@ -1,11 +1,12 @@
 import { action } from 'typesafe-actions';
-import { ParamsData, SimulatorData, SimulatorDataTypes } from './types';
+import { AssetsNameData, SimulatorData, SimulatorDataTypes } from './types';
+
+export const loadAssetsRequest = () => action(SimulatorDataTypes.ASSETS_REQUEST);
+
+export const loadAssetsSuccess = (assets: AssetsNameData) => action(SimulatorDataTypes.ASSETS_SUCCESS,
+  assets);
 
 export const loadRequest = () => action(SimulatorDataTypes.LOAD_REQUEST);
-
-export const setParams = (params: ParamsData) => action(SimulatorDataTypes.SET_PARAMS, {
-  params,
-});
 
 export const loadSuccess = (data: SimulatorData) => action(SimulatorDataTypes.LOAD_SUCCESS, {
   data,
