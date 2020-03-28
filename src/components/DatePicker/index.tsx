@@ -5,13 +5,21 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import { ptBR } from 'date-fns/locale';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { average } from '../../services/dataset';
 import { getDateTimestamp } from '../../services/time';
 import { ApplicationState } from '../../store';
 import { SimulatorDataTypes } from '../../store/ducks/SimulatorData/types';
 
 export default function DatePicker() {
-  const { date } = useSelector((state: ApplicationState) => state.simulatorData);
+  const { data, date } = useSelector((state: ApplicationState) => state.simulatorData);
   const dispatch = useDispatch();
+
+  const setPriceBuy = (price: number) => {
+    dispatch({
+      type: SimulatorDataTypes.SET_PRICE_BUY,
+      payload: price,
+    });
+  };
 
   const handleDateChange = (date: Date | null) => {
     if (date !== null) {
@@ -19,7 +27,13 @@ export default function DatePicker() {
         type: SimulatorDataTypes.SET_DATE,
         payload: getDateTimestamp(date),
       });
+
+      const timer = setTimeout(() => setPriceBuy(average([data[0].open, data[0].close])), 1000);
+
+      return () => clearTimeout(timer);
     }
+
+    return null;
   };
 
   return (

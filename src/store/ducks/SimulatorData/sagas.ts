@@ -38,7 +38,3 @@ export function* load() {
 export function* reload() {
   yield call(load);
 }
-
-export function* showStore() {
-  yield call(console.log, store.getState().simulatorData);
-}

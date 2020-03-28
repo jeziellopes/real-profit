@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 import React from 'react';
 import { currency } from '../../services/currency';
+import { percent } from '../../services/dataset';
 import useExternalStyles from '../../styles/global';
 
 const useStyles = makeStyles({
@@ -37,12 +38,12 @@ const useStyles = makeStyles({
 interface Props {
   title: string
   investment: number
-  percent: number
+  profitpercent: number
   profit: number
   description?: string
 }
 
-export default function ProfitCard({ title, investment, percent, profit, description }: Props) {
+export default function ProfitCard({ title, investment, profitpercent, profit, description }: Props) {
   const classes = useStyles();
   const externalClasses = useExternalStyles();
 
@@ -83,10 +84,9 @@ export default function ProfitCard({ title, investment, percent, profit, descrip
       <Typography
         component="p"
         variant="h4"
-        className={percent < 0 ? negativeProfit : positiveProfit}
+        className={profitpercent < 0 ? negativeProfit : positiveProfit}
       >
-        {percent.toString()}
-        %
+        {percent(profitpercent)}
       </Typography>
 
       <Typography color="textSecondary" className={dateText}>
@@ -109,36 +109,3 @@ export default function ProfitCard({ title, investment, percent, profit, descrip
     </Paper>
   );
 }
-
-// <Typography
-//         component="p"
-//         variant="h4"
-//         className={totalProfit}
-//       >
-//         + R$ 2.524,00
-//       </Typography>
-//       <Typography color="textSecondary" className={classes.profitContext}>
-//         Rentabilidade acumulada
-//       </Typography>
-
-//       <Typography
-//         component="p"
-//         variant="h4"
-//         className={positiveProfit}
-//       >
-//         R$ 20.524,00
-//       </Typography>
-//       <Typography color="textSecondary" className={classes.profitContext}>
-//         Valor total
-//       </Typography>
-
-//       <Typography
-//         component="p"
-//         variant="h6"
-//         className={negativeProfit}
-//       >
-//         - R$ 324,00
-//       </Typography>
-//       <Typography color="textSecondary" className={dateText}>
-//         on 15 March, 2019
-//       </Typography>

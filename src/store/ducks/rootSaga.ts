@@ -1,6 +1,6 @@
 import { all, takeEvery, takeLatest } from 'redux-saga/effects';
 // eslint-disable-next-line import/no-cycle
-import { load, loadAssets, reload, showStore } from './SimulatorData/sagas';
+import { load, loadAssets, reload } from './SimulatorData/sagas';
 import { SimulatorDataTypes } from './SimulatorData/types';
 
 export default function* rootSaga() {
@@ -9,8 +9,8 @@ export default function* rootSaga() {
     takeEvery(SimulatorDataTypes.ASSETS_SUCCESS, reload),
     takeLatest(SimulatorDataTypes.LOAD_REQUEST, load),
     takeLatest(SimulatorDataTypes.SET_PARAMS, reload),
-
-    takeLatest(SimulatorDataTypes.SET_INVESTMENT, showStore),
-    takeLatest(SimulatorDataTypes.SET_ASSET, showStore),
+    takeLatest(SimulatorDataTypes.SET_DATE, reload),
+    takeLatest(SimulatorDataTypes.SET_INVESTMENT, reload),
+    takeLatest(SimulatorDataTypes.SET_ASSET, reload),
   ]);
 }

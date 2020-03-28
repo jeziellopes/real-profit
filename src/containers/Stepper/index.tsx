@@ -54,7 +54,7 @@ export default function CustomizedSteppers() {
   const externalClasses = externalStyles();
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
-  const { date, asset, loading } = useSelector((state: ApplicationState) => state.simulatorData);
+  const { date, asset } = useSelector((state: ApplicationState) => state.simulatorData);
   const steps = ['Selecione o ativo...', 'Data do investimento', 'Valor investido'];
 
   function setParams() {
@@ -79,10 +79,6 @@ export default function CustomizedSteppers() {
     });
   }
 
-  // const handleReset = () => {
-  //   setActiveStep(0);
-  // };
-
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
@@ -93,6 +89,8 @@ export default function CustomizedSteppers() {
 
       return () => clearTimeout(timer);
     }
+
+    return null;
   };
 
   const handleBack = () => {
@@ -152,7 +150,3 @@ export default function CustomizedSteppers() {
     </div>
   );
 }
-
-// <Button onClick={handleReset} className={classes.button}>
-// Alterar dados
-// </Button>

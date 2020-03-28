@@ -8,8 +8,6 @@ import Stepper from '../Stepper';
 export default function Home() {
   const classes = useStyles();
 
-  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  // const secondaryFixedHeight = clsx(classes.paper, classes.secondaryFixedHeight);
   const SimulatorHeight = clsx(classes.paper, classes.SimulatorFixedHeight);
 
   return (

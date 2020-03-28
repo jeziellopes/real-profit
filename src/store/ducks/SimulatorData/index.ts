@@ -25,75 +25,73 @@ const INITIAL_STATE: SimulatorDataState = {
     key: 'BTC',
     title: 'Bitcoin',
   },
-  date: 1548986400000,
+  date: 1551409200000,
   assets: [],
   investment: 2000,
-  pricebuy: 0,
+  pricebuy: 15000,
   simulator: false,
   error: false,
   loading: false,
 };
 
 const reducer: Reducer<SimulatorDataState> = (state = INITIAL_STATE, action) => {
+  console.log(action);
   switch (action.type) {
     case SimulatorDataTypes.ASSETS_REQUEST:
-      console.log(action);
       return {
         ...state, loading: true,
       };
+
     case SimulatorDataTypes.ASSETS_SUCCESS:
-      console.log(action);
       return {
         ...state, loading: false, error: false, assets: action.payload,
       };
+
     case SimulatorDataTypes.SET_ASSET:
-      console.log(action);
       return {
         ...state, loading: false, error: false, asset: action.payload,
       };
+
     case SimulatorDataTypes.SET_DATE:
-      console.log(action);
       return {
         ...state, loading: false, error: false, date: action.payload,
       };
 
     case SimulatorDataTypes.SET_INVESTMENT:
-      console.log(action);
       return {
         ...state, loading: false, error: false, investment: action.payload,
       };
+
     case SimulatorDataTypes.SET_PRICE_BUY:
       return {
         ...state, loading: false, error: false, pricebuy: action.payload,
       };
 
     case SimulatorDataTypes.SET_PARAMS:
-      console.log(action);
       return {
         ...state, loading: false, error: false, params: action.payload,
       };
 
     case SimulatorDataTypes.SET_SIMULATOR:
-      console.log(action);
       return {
         ...state, loading: false, simulator: action.payload,
       };
 
     case SimulatorDataTypes.LOAD_REQUEST:
-      console.log(action);
       return {
         ...state, loading: true,
       };
+
     case SimulatorDataTypes.LOAD_SUCCESS:
-      console.log(action);
       return {
         ...state, loading: false, error: false, data: action.payload.data,
       };
+
     case SimulatorDataTypes.LOAD_FAILURE:
-      console.log(action);
       return {
         ...state, loading: false, error: true, data: [],
       };
+
     default:
       return state;
   }

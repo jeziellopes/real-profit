@@ -142,10 +142,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-// {/* Recent Orders */}
-// <Grid item xs={12} lg={9}>
-//   <Paper className={secondaryFixedHeight}>
-//     <Orders />
-//   </Paper>
-// </Grid>

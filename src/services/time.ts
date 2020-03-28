@@ -28,3 +28,7 @@ export function timestampDate(time: number) {
 export function nowSubYear(years: number) {
   return new Date(subYears(new Date(), years)).getTime().toString();
 }
+
+export function getDateTimestamp(date: Date) {
+  return date.getTime();
+}

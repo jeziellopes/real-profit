@@ -1,3 +1,34 @@
+import { AssetsNameData } from '../store/ducks/SimulatorData/types';
+
+interface APICoinInfoData {
+  Id: string
+  Name: string
+  FullName: string
+  Internal: string
+  ImageUrl: string
+  Url: string
+  Algorithm: string
+  ProofType: string
+  Rating: {
+    Weiss: {
+      Rating: string
+      TechnologyAdoptionRating: string
+      MarketPerformanceRating: string
+    }
+  },
+  NetHashesPerSecond: number
+  BlockNumber: number
+  BlockTime: number
+  BlockReward: number
+  Type: number
+  DocumentType: string
+}
+
+interface APIAssetsData {
+  CoinInfo: APICoinInfoData
+  RAW: any
+  DISPLAY: any
+}
 
 interface Dataset {
   time: number
@@ -21,40 +52,44 @@ export function average(values: Array<number>) {
   return values.reduce((a, b) => a + b, 0) / values.length;
 }
 
+export function percentdecimal(investment: number, close: number, pricebuy: number) {
+  return (close / pricebuy) - 1;
+}
+
 export function percent(decimal: number) {
   return Number(decimal).toLocaleString('en-US', {
     style: 'percent',
   });
 }
 
-export const assetPercentProfit = (params: AssetProfitData) => params.data.map((data) => ({
-  time: data.time, profit: percent(((data.close / params.pricebuy) - 1)),
-}));
-
-export const assetPriceProfit = (params: AssetProfitData) => params.data.map((data) => ({
-  time: data.time, profit: String.prototype.concat('R$ ', ((params.investment * data.close) / params.pricebuy).toFixed(2)),
-}));
-
-export function currency(value: number) {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency', currency: 'BRL',
-  }).format(value);
+export function formatFloat(value: number, decimals: number) {
+  return Math.round(parseFloat(value.toFixed(decimals)) * 1000000) / 1000000;
 }
 
-export function treasuryProfit(period: number, position: number) {
-  return (0.0261 * position) / 100;
+export function assetProfit(investment: number, pricebuy: number, close: number) {
+  return formatFloat(investment * (close / pricebuy), 2);
 }
 
-export const treatData = (dataarray: Dataset[], investment: number, pricebuy: number) => dataarray.map((data) => ({
+export function treasuryProfit(position: number) {
+  return formatFloat((((((1) + (0.1))) ** (((position) / (365))))) - (1), 7);
+}
+
+export function realizedTreasury(investment: number, position: number) {
+  return formatFloat(investment * (treasuryProfit(position) + 1), 2);
+}
+
+export const treatData = (dataarray: Dataset[], investment: number, pricebuy: number, asset: AssetsNameData) => dataarray.map((data) => ({
+  title: asset.title,
   time: data.time,
   open: data.open,
   close: data.close,
-  profit: data.close - pricebuy,
-  profitcurrency: currency(data.close - pricebuy),
-  profitpercent: ((data.close / pricebuy) - 1),
-  profitpercentformated: percent((data.close / pricebuy) - 1),
-  bitcoin: parseFloat((((data.close / pricebuy) - 1) * 100).toFixed(2)),
-  bitcoinformatted: percent((data.close / pricebuy) - 1),
-  treasury: parseFloat((treasuryProfit(dataarray.length, dataarray.indexOf(data) + 1) * 100).toFixed(2)),
-  treasuryformatter: percent(treasuryProfit(dataarray.length, dataarray.indexOf(data) + 1)),
+  profitpercent: formatFloat(((data.close / pricebuy) - 1), 2),
+  assetone: assetProfit(investment, pricebuy, data.close),
+  treasury: realizedTreasury(investment, dataarray.indexOf(data) + 1),
 }));
+
+export const treatAssets = (assets: APIAssetsData[]) => assets.map((asset: APIAssetsData) => ({
+  key: asset.CoinInfo.Name,
+  title: asset.CoinInfo.FullName,
+}));
+

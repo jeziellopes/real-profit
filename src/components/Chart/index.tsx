@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import AddAsset from '../../containers/AddAsset';
+import { currencyString } from '../../services/currency';
 import { formatFullTime, formatTime } from '../../services/time';
 import { ApplicationState } from '../../store';
 import Title from '../Title';
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }));
 
 export default function Chart() {
-  const { data, params } = useSelector((state: ApplicationState) => state.simulatorData);
+  const { data } = useSelector((state: ApplicationState) => state.simulatorData);
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [opacity, setOpacity] = useState({
@@ -66,21 +67,35 @@ export default function Chart() {
           style={{
             cursor: 'pointer',
           }}
-          width={1200}
-          height={500}
           data={data}
           margin={{
             top: 10, right: 30, left: 20, bottom: 10,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="time" allowDataOverflow tickFormatter={(time) => formatTime(time)} />
-          <YAxis type="number" scale="sqrt" />
+          <XAxis
+            interval="preserveStartEnd"
+            dataKey="time"
+            allowDataOverflow
+            tickFormatter={(time) => formatTime(time)}
+            angle={-20}
+            textAnchor="end"
+          />
+          <YAxis
+            scale="auto"
+            type="number"
+            tickFormatter={(number) => currencyString(number)}
+            domain={[(dataMin) => -(Math.abs(dataMin) * 0.2), (dataMax) => (dataMax * 1.2)]}
+            label={{
+              value: 'Rendimentos (R$)', position: 'left', angle: -90, dy: -30,
+            }}
+          />
           <Tooltip labelFormatter={(time) => formatFullTime(time)} />
           <Legend
-            height={8}
+            height={36}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            verticalAlign="top"
           />
           <Line
             name={data[0].title}
@@ -115,9 +130,7 @@ export default function Chart() {
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
       >
-
         <DialogContent>
-
           <AddAsset />
           <Paper
             elevation={3}
@@ -127,70 +140,3 @@ export default function Chart() {
     </>
   );
 }
-
-// export default class Example extends PureComponent {
-//   static jsfiddleUrl = 'https://jsfiddle.net/alidingling/1p40zzfe/';
-
-//   state = {
-//     opacity: {
-//       uv: 1,
-//       pv: 1,
-//     },
-//   };
-
-//   handleMouseEnter = (o) => {
-//     const { dataKey } = o;
-//     const { opacity } = this.state;
-
-//     this.setState({
-//       opacity: {
-//         ...opacity, [dataKey]: 0.5,
-//       },
-//     });
-//   }
-
-//   handleMouseLeave = (o) => {
-//     const { dataKey } = o;
-//     const { opacity } = this.state;
-
-//     this.setState({
-//       opacity: {
-//         ...opacity, [dataKey]: 1,
-//       },
-//     });
-//   }
-
-//   render() {
-//     const { opacity } = this.state;
-
-//     return (
-//       <div>
-//         <LineChart
-//           width={500}
-//           height={300}
-//           data={data}
-//           margin={{
-//             top: 5, right: 30, left: 20, bottom: 5,
-//           }}
-// >
-//           <CartesianGrid strokeDasharray="3 3" />
-//           <XAxis dataKey="name" />
-//           <YAxis />
-//           <Tooltip />
-//           <Legend onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} />
-//           <Line
-//             type="monotone"
-//             dataKey="pv"
-//             strokeOpacity={opacity.pv}
-//             stroke="#8884d8"
-//             activeDot={{
-//               r: 8,
-//             }}
-//           />
-//           <Line type="monotone" dataKey="uv" strokeOpacity={opacity.uv} stroke="#82ca9d" />
-//         </LineChart>
-//         <p className="notes">Tips: Hover the legend !</p>
-//       </div>
-//     );
-//   }
-// }

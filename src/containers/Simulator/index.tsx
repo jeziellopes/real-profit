@@ -5,13 +5,9 @@ import Chart from '../../components/Chart';
 import Copyright from '../../components/Copyright';
 import useStyles from '../../styles/global';
 
-// import { Container } from './styles';
-
 export default function Simulator() {
   const classes = useStyles();
 
-  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  // const secondaryFixedHeight = clsx(classes.paper, classes.secondaryFixedHeight);
   const simulatorFixedHeight = clsx(classes.paper, classes.SimulatorFixedHeight);
 
   return (
@@ -34,9 +30,3 @@ export default function Simulator() {
     </main>
   );
 }
-
-// <Grid item xs={12} md={12} lg={12}>
-//   <Paper className={secondaryFixedHeight}>
-//     <ProfitCard />
-//   </Paper>
-// </Grid>

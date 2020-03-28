@@ -1,44 +1,56 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Real Profit** é uma aplicação para **simulação de rentabilidade** entre diferentes **criptoativos e o tesouro direto pré-fixado**.
 
-## Available Scripts
+## Atores e Ações
 
-In the project directory, you can run:
+1. Usuário: seleciona um criptoativo
+2. Usuário: informa a data do investimento
+3. Usuário: informa o valor investido
+4. Sistema: processa informações
+5. Sistema: redireciona para o gráfico
+6. Usuário: clica na área do gráfico
+7. Sistema: exibe detalhes dos rendimentos
+8. Usuário: pode alterar criptoativo
+9. Usuário: pode alterar data do investimento
+10. Usuário: pode alterar o valor do investimento
+11. Usuário: processa informações atualizadas
+12. Sistema: atualiza informações da simulação
 
-### `yarn start`
+## Funcionamento e Soluções adotadas
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- _Seleção do Criptoativo_
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Nesta funcionalidade utilizei a API _[CryptoCompare](https://min-api.cryptocompare.com/documentation)_ para buscar uma lista dos 10 criptoativos que tiveram maior volume nas últimas 24hs, listando-os no _Select_ implementado no primeiro passo do _Stepper_ e nos Detalhes dos rendimentos.
 
-### `yarn test`
+- _Seleção da Data do investimento_
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Optei por trabalhar com datas no formato _timestamp_, pois é o formado que a API externa aceita como parâmetro (_totimestamp_) nas requisições, e criei uma _'lib'_ de funções para fazer conversões quando necessário, como será possível ver no módulo _time.ts_.
 
-### `yarn build`
+- _Valor investido_
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Para este campo utilizei o _CurrencyTextField_ um componente de terceiros que já faz toda a validação de números em formato _currency_.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- _Processamento de informações e exibição do gráfico_
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Nesta parte utilizei o próprio Redux para definir quando o usuário está definindo parâmetros da simulação ou está visualizando o gráfico através do parâmetro _simulator_ do estado global, de forma que depois do processamento, com a alteração no estado, o recarregamento automático de componentes do React levaria o usuário para a página do gráfico.
 
-### `yarn eject`
+- _Detalhes dos rendimentos_
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Para a exibição dos detalhes em tempo real criei _sagas_ e _actions_ que seriam disparadas a cada alteração dos campos abertos para edição. Optei por esta sugestão desde o princípio, pois ela daria uma melhor liberdade para o usuário escolher um novo _criptoativo_, uma nova _data_ ou mesmo um novo _valor_ de investimento, agregando à experiência do usuário.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Tecnologias e impressões
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- _Redux, Redux Saga e Estado Global_
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Desde os primeiros _insights_ pensei a aplicação com _estado global_ com _Redux_ por perceber que apesar de haver muitas informações definidas isoladamente, numa _perspectiva global_, esses dados seriam _interdependentes_ e todo o fluxo de definição de _ativo, data e valor_ seriam essenciais para a atribuição dos _parâmetros da requisição_ de cotações, e logo deveriam estar _acessíveis_ a qualquer _tempo_ e de qualquer _lugar_ da aplicação.
 
-## Learn More
+- _TypeScript, Tipos e Estruturas_
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+A sugestão do TypeScript para o desafio veio num ótimo momento. Não tem nem como comparar o desenvolvimento com Typescript e o desenvolvimento sem Typescript. O controle das variáveis, tipos e estrutura dentro da aplicação é algo que trás bastante segurança no desenvolvimento e livra a nós desenvolvedores das tão conhecidas inconsistências.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- _React Hooks e Simplicidade_
+
+Os React Hooks me permitiram aplicar de forma bem mais simples toda a lógica e estrutura de componentização do React, sem mencionar que o próprio _Redux_ já tem implementações que permitem disparar _actions_ e 'escutar' variáveis da _Store_, o que permitiu deixar o código muito mais simples do que com versões anteriores do Redux.
+
+- _Jest, Unit e Validação_
+
+Um ponto que me preocupou muito no início do projeto, uma vez que no desenvolvimento lidamos com matemática mesmo não sendo nosso foco principal, foi a lógica das funções de rentabilidade que pensei para a solução (depois de muita pesquisa). Mas foi algo que eu sabia que com um _testes unitários_ no _Jest_ seria tranquilamente validado.

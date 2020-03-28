@@ -8,9 +8,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <Router>
-        <div>
-          <Routes />
-        </div>
+        <Routes />
       </Router>
     </Provider>
 
